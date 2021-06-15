@@ -1,7 +1,15 @@
 const uuid = require("uuid");
 
 class FakeTodoDb {
-  store = [];
+  store = [
+    {
+      title: "Buy groceries",
+      body: "10 cartons of milk",
+      timestamp: "Today",
+      id: "0",
+      complete: false,
+    },
+  ];
 
   constructor() {}
 
@@ -13,14 +21,15 @@ class FakeTodoDb {
 
   insert(t) {
     try {
-      this.store.push({
+      const newTodo = {
         id: uuid.v4(),
         title: t.title,
         body: t.body,
         complete: false,
         timestamp: new Date().toLocaleString(),
-      });
-      return { success: true };
+      };
+      this.store.push(newTodo);
+      return { success: true, todo: newTodo };
     } catch (error) {
       return { success: false };
     }
@@ -36,7 +45,7 @@ class FakeTodoDb {
         }
         return s;
       });
-      return { success };
+      return { success, todo: t };
     } catch (error) {
       return { success: false };
     }
@@ -52,7 +61,7 @@ class FakeTodoDb {
         }
         return true;
       });
-      return { success };
+      return { success, id };
     } catch (error) {
       return { success: false };
     }
