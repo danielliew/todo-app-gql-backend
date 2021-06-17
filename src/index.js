@@ -11,6 +11,7 @@ const app = new ApolloServer({
     console.log(err.message);
     return err;
   },
+  introspection: process.env.NODE_ENV !== "production",
 });
 
 module.exports = app;
